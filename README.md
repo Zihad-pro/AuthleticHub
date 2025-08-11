@@ -1,6 +1,6 @@
 # AuthleticHub —  Sports Website
 
-[🌐 Live Link](https://athletichub-f25f3.web.app/)
+Live Link : https://athletichub-f25f3.web.app/
 
 ---
 
