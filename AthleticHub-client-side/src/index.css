@@ -1,0 +1,13 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
+
+
+@theme {
+  --font-Primary: "Bebas Neue", sans-serif;
+  --color-BtnPrimary1:#0010F0;
+  --color-BtnPrimary2:#0050F0;
+  --color-Primary1:#1C1C1C;
+
+}
