@@ -1,31 +1,21 @@
-Live Link: https://athletichub-f25f3.web.app/
+# AuthleticHub —  Sports Website
 
-AuthleticHub is a sports web app built with the MERN stack (MongoDB, Express, React, Node) and Firebase Authentication. It provides athlete profiles, event listings, registration/bookings, and admin controls.
+[🌐 Live Link](https://athletichub-f25f3.web.app/)
 
-Features
+---
 
-User authentication using Firebase Auth (email/password, Google sign-in).
+## About  
+**AuthleticHub** is a sports web app built with the **MERN stack** (MongoDB, Express, React, Node) and **Firebase Authentication**. It provides athlete profiles, event listings, registration/bookings, and admin controls.
 
-Role-based access: User and Admin (admins can manage events, athletes, and bookings).
+---
 
-Athlete profiles (image, bio, stats, achievements).
+## Features
+- 🔐 User authentication with Firebase Auth (email/password, Google sign-in)    
+- 📅 Event listing and detailed event pages  
+- 📝 Booking/registration system with server-side records  
+- ⚙️ RESTful API using Express + Node and MongoDB  
 
-Event listing and event detail pages.
+---
+Client side host firebase deploy . server side hosted vercel
 
-Booking/registration for events (with server-side booking records).
 
-Dashboard for users and admins (manage bookings, add/remove events).
-
-RESTful API built with Express + Node and MongoDB as database.
-
-Tech Stack
-
-Frontend: React (Create React App or Vite), React Router, Tailwind CSS / DaisyUI
-
-Backend: Node.js, Express.js
-
-Database: MongoDB (MongoDB Atlas recommended)
-
-Auth: Firebase Authentication
-
-Deployment: Frontend hosted on Firebase Hosting / Vercel, Backend on Render / Railway / Heroku
