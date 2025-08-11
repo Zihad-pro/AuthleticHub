@@ -1,6 +1,6 @@
-Live demo: https://athletichub-f25f3.web.app/
+Live Link: https://athletichub-f25f3.web.app/
 
-AuthleticHub is a sports/athletics web app built with the MERN stack (MongoDB, Express, React, Node) and Firebase Authentication. It provides athlete profiles, event listings, registration/bookings, and admin controls.
+AuthleticHub is a sports web app built with the MERN stack (MongoDB, Express, React, Node) and Firebase Authentication. It provides athlete profiles, event listings, registration/bookings, and admin controls.
 
 Features
 
