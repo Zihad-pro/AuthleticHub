@@ -115,6 +115,7 @@ const Navber = () => {
           <ul className="menu menu-horizontal px-1 text-base">{links}</ul>
         </div>
         <div className="navbar-end lg:gap-8 md:gap-4 gap-1">
+          {/* Dark mode add */}
           <ToggleBtn></ToggleBtn>
 
           <div>
