@@ -1,25 +1,26 @@
 import React from "react";
 import CountUp from "react-countup";
-import { FaRunning, FaDumbbell, FaUsers, FaTrophy } from "react-icons/fa";
-
+import { FaTrophy, FaUsers } from "react-icons/fa";
+import { IoCheckmarkDone } from "react-icons/io5";
+import { IoAddCircleOutline } from "react-icons/io5";
 const Success = () => {
   const stats = [
     {
       icon: <FaUsers />,
       label: "Active Members",
-      value: 12000,
+      value: 1200000,
       suffix: "+",
     },
     {
-      icon: <FaDumbbell />,
-      label: "Workouts Completed",
+      icon: <IoCheckmarkDone />,
+      label: "Completed People ",
       value: 85000,
       suffix: "+",
     },
     {
-      icon: <FaRunning />,
-      label: "Miles Run",
-      value: 500000,
+      icon: <IoAddCircleOutline />,
+      label: "This year Enroll people",
+      value: 5000,
       suffix: "+",
     },
     {
