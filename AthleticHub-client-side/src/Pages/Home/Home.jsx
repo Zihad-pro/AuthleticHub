@@ -3,6 +3,7 @@ import Slider from './Slider';
 import SportsBenefits from './SportsBenefits';
 import Award from './Award';
 import FeaturedEvents from '../Featured Events/FeaturedEvents';
+import Success from './success';
 
 const Home = () => {
   return (
@@ -12,6 +13,7 @@ const Home = () => {
         <FeaturedEvents></FeaturedEvents>
         <Award></Award>
         <SportsBenefits></SportsBenefits>
+        <Success></Success>
       </div>
     </div>
   );
