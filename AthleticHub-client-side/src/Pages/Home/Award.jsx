@@ -35,7 +35,7 @@ const awards = [
 
 const Award = () => {
   return (
-    <section className="max-w-screen-xl mx-auto px-4 py-16  text-gray-800">
+    <section className="max-w-screen-xl mx-auto px-4 py-16  ">
       <h2 className="text-4xl font-bold text-center mb-6">
         🏆 Award Ceremony Gallery
       </h2>

@@ -7,7 +7,7 @@ import Success from './success';
 
 const Home = () => {
   return (
-    <div className="bg-gray-100">
+    <div className="">
       <div className="mx-auto max-w-7xl ">
         <Slider></Slider>
         <FeaturedEvents></FeaturedEvents>

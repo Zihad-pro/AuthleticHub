@@ -1,12 +1,11 @@
 import React from "react";
 import Navber from "../Pages/Shared/Navber";
 import Footer from "../Pages/Shared/Footer";
-import Slider from "../Pages/Home/Slider";
 import { Outlet } from "react-router";
 
 const MainLayouts = () => {
   return (
-    <div className="font-Primary">
+    <div className="font-Primary bg-gray-100 dark:bg-gray-900 dark:text-white ">
       <div className="fixed top-0 left-0 w-full z-50">
         <Navber />
       </div>

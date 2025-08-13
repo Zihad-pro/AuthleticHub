@@ -5,6 +5,7 @@ import { Link, NavLink } from "react-router";
 import { AuthContext } from "../../Contexts/AuthContext";
 import Swal from "sweetalert2";
 import { Tooltip } from "react-tooltip";
+import ToggleBtn from "../../Components/ToggleBtn";
 const Navber = () => {
   const { user, signOutUser } = use(AuthContext);
   const handleLogOut = () => {
@@ -65,7 +66,7 @@ const Navber = () => {
     </>
   );
   return (
-    <div className=" bg-[#1C1C1C] shadow-sm">
+    <div className=" bg-[#1C1C1C] shadow-sm ">
       <div className="max-w-7xl mx-auto navbar">
         <div className="navbar-start">
           <div className="dropdown">
@@ -114,6 +115,8 @@ const Navber = () => {
           <ul className="menu menu-horizontal px-1 text-base">{links}</ul>
         </div>
         <div className="navbar-end lg:gap-8 md:gap-4 gap-1">
+          <ToggleBtn></ToggleBtn>
+
           <div>
             {user?.photoURL ? (
               <>

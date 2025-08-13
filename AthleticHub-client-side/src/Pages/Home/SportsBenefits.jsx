@@ -25,9 +25,9 @@ const benefits = [
 
 const SportsBenefits = () => {
   return (
-    <section className="bg-gray-100 py-16 px-4 ">
+    <section className="py-16 px-4 ">
       <div className="max-w-6xl mx-auto text-center mb-10">
-        <h2 className="text-4xl font-bold mb-4 text-gray-800">
+        <h2 className="text-4xl font-bold mb-4 ">
           Benefits of Playing Sports
         </h2>
         <p className="text-gray-600 mb-12">
