@@ -6,10 +6,14 @@ import { Outlet } from "react-router";
 
 const MainLayouts = () => {
   return (
-    <div className="font-Primary ">
-      <Navber></Navber>
-      <Outlet></Outlet>
-      <Footer></Footer>
+    <div className="font-Primary">
+      <div className="fixed top-0 left-0 w-full z-50">
+        <Navber />
+      </div>
+      <div className="pt-16">
+        <Outlet />
+        <Footer />
+      </div>
     </div>
   );
 };
