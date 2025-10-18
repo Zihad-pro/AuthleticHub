@@ -21,12 +21,10 @@ Client side host firebase deploy . server side hosted vercel
 # 📸 Project Screenshots
 
 ## 🖼 Home
-
-## 🖼 Home
-<img src="./1.png" alt="Project Banner" width="600" height="400">
+<img src="./1.png" alt="Project Banner" width="200" height="400">
 
 ## 🖼 Event page
-<img src="./2.png" alt="Event Banner" width="800" height="450">
+<img src="./2.png" alt="Event Banner" width="200" height="400">
 
 
 
