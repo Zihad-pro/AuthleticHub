@@ -6,7 +6,7 @@ import { Outlet } from "react-router";
 const MainLayouts = () => {
   return (
     // dark mode add
-    <div className="font-Primary bg-gray-100 dark:bg-gray-900 dark:text-white ">
+    <div className="font-Primary bg-gray-100 dark:bg-black dark:text-white ">
       <div className="fixed top-0 left-0 w-full z-50">
         <Navber />
       </div>
