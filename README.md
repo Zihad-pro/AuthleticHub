@@ -21,6 +21,9 @@ Client side host firebase deploy . server side hosted vercel
 # 📸 Project Screenshots
 
 ## 🖼 Home
-[![Project Banner](https://i.ibb.co/35mSwJ2T/Screenshot-2025-10-18-125604.png)](https://i.ibb.co/35mSwJ2T/Screenshot-2025-10-18-125604.png)
+
+![Project Banner](./1.png)
+![Another Banner](./2.png)
+
 
 
