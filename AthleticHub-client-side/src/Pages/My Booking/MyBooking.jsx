@@ -1,7 +1,16 @@
+
+
 import React, { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../../Contexts/AuthContext";
-import { FaSadTear, FaTh, FaList } from "react-icons/fa";
-import { RxCross2 } from "react-icons/rx";
+import {
+  FaSadTear,
+  FaTh,
+  FaList,
+  FaCalendarAlt,
+  FaTimes,
+  FaArrowLeft,
+  FaArrowRight,
+} from "react-icons/fa";
 import Swal from "sweetalert2";
 import Loading from "../../Components/Loading";
 
@@ -9,7 +18,11 @@ const MyBooking = () => {
   const { user } = useContext(AuthContext);
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [viewMode, setViewMode] = useState("table"); // 'table' or 'card'
+  const [viewMode, setViewMode] = useState("table");
+
+  // Pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const bookingsPerPage = 5;
 
   useEffect(() => {
     if (user?.email) {
@@ -26,45 +39,43 @@ const MyBooking = () => {
     }
   }, [user?.email]);
 
-  const handleCancel = async (id) => {
+  const handleCancel = async (id, eventName) => {
     const result = await Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
+      title: "Cancel Booking?",
+      html: `<p>Are you sure you want to cancel your booking for <strong>"${eventName}"</strong>?</p>`,
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, cancel it!",
+      confirmButtonColor: "#dc2626",
+      cancelButtonColor: "#6b7280",
+      confirmButtonText: "Yes, Cancel Booking",
+      cancelButtonText: "Keep Booking",
+      focusCancel: true,
     });
 
     if (result.isConfirmed) {
       try {
         const res = await fetch(
           `https://athletichub-chi.vercel.app/mybooking/${id}`,
-          {
-            method: "DELETE",
-          }
+          { method: "DELETE" }
         );
-
         const data = await res.json();
 
         if (data.deletedCount > 0) {
           Swal.fire({
-            title: "Canceled!",
-            text: "Your booking has been canceled.",
+            title: "Booking Canceled!",
+            text: "Your booking has been successfully canceled.",
             icon: "success",
-            timer: 1500,
+            timer: 2000,
             showConfirmButton: false,
           });
-
           setBookings((prev) => prev.filter((booking) => booking._id !== id));
         }
       } catch (err) {
         console.error("Delete failed", err);
         Swal.fire({
-          icon: "error",
           title: "Error",
-          text: "Failed to cancel booking.",
+          text: "Failed to cancel booking. Please try again.",
+          icon: "error",
         });
       }
     }
@@ -72,98 +83,210 @@ const MyBooking = () => {
 
   if (loading) return <Loading />;
 
-  return (
-    <div className="max-w-6xl mx-auto px-4 py-15 min-h-170">
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-3xl font-bold text-center">My Bookings Events</h2>
-        <div className="flex gap-2">
-          <button
-            onClick={() => setViewMode("table")}
-            className={`p-2 rounded ${
-              viewMode === "table" ? "bg-blue-500 text-white" : "bg-gray-200"
-            }`}
-            title="Table View"
-          >
-            <FaList />
-          </button>
-          <button
-            onClick={() => setViewMode("card")}
-            className={`p-2 rounded ${
-              viewMode === "card" ? "bg-blue-500 text-white" : "bg-gray-200"
-            }`}
-            title="Card View"
-          >
-            <FaTh />
-          </button>
-        </div>
-      </div>
+  // Pagination logic
+  const indexOfLastBooking = currentPage * bookingsPerPage;
+  const indexOfFirstBooking = indexOfLastBooking - bookingsPerPage;
+  const currentBookings = bookings.slice(
+    indexOfFirstBooking,
+    indexOfLastBooking
+  );
+  const totalPages = Math.ceil(bookings.length / bookingsPerPage);
 
-      {bookings.length === 0 ? (
-        <div className="flex flex-col items-center justify-center mt-20 text-gray-500">
-          <FaSadTear className="text-6xl mb-4 text-gray-400" />
-          <p className="text-lg">You haven't booked any events yet.</p>
+  // Pagination functions
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const prevPage = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
+  const nextPage = () =>
+    setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+  const getPageNumbers = () =>
+    Array.from({ length: totalPages }, (_, i) => i + 1);
+
+  return (
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-3">
+          <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-2 flex justify-center items-center gap-2">
+            <FaCalendarAlt /> My Bookings
+          </h1>
+          <p className="text-lg text-gray-600 dark:text-gray-400">
+            Manage your event bookings and track your athletic journey.
+          </p>
         </div>
-      ) : viewMode === "table" ? (
-        <div className="overflow-x-auto">
-          <table className="table w-full border rounded-xl shadow">
-            <thead className="bg-gray-100 text-gray-700 text-sm uppercase">
-              <tr>
-                <th className="p-3">Image</th>
-                <th className="p-3">Event Name</th>
-                <th className="p-3 text-center">Cancel</th>
-              </tr>
-            </thead>
-            <tbody>
-              {bookings.map((event) => (
-                <tr key={event._id} className="hover:bg-gray-50">
-                  <td className="p-3">
-                    <img
-                      src={event.imageUrl}
-                      alt={event.eventName}
-                      className="w-20 h-16 object-cover rounded-md"
-                    />
-                  </td>
-                  <td className="p-3 font-medium">{event.eventName}</td>
-                  <td className="p-3 text-center">
-                    <button
-                      onClick={() => handleCancel(event._id)}
-                      className="btn btn-sm btn-error text-white"
-                    >
-                      <RxCross2 size={18} />
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      ) : (
-        // Card View
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {bookings.map((event) => (
-            <div
-              key={event._id}
-              className="border rounded-xl shadow p-4 flex flex-col gap-3"
+
+        {/* View Toggle */}
+        <div className="flex justify-end mb-6">
+          <div className="flex gap-2 bg-white dark:bg-gray-800 rounded-xl p-1.5 shadow-sm border border-gray-200 dark:border-gray-700">
+            <button
+              onClick={() => setViewMode("table")}
+              className={`flex items-center gap-2 px-4 py-2.5 rounded-lg transition-all duration-200 ${
+                viewMode === "table"
+                  ? "bg-blue-500 text-white shadow-sm"
+                  : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+              }`}
             >
-              <img
-                src={event.imageUrl}
-                alt={event.eventName}
-                className="w-full h-40 object-cover rounded-md"
-              />
-              <h3 className="text-lg font-semibold">{event.eventName}</h3>
-              <button
-                onClick={() => handleCancel(event._id)}
-                className="btn btn-error btn-sm text-white self-end"
-              >
-                <RxCross2 size={18} />
-                Cancel
-              </button>
-            </div>
-          ))}
+              <FaList className="text-sm" /> Table
+            </button>
+            <button
+              onClick={() => setViewMode("card")}
+              className={`flex items-center gap-2 px-4 py-2.5 rounded-lg transition-all duration-200 ${
+                viewMode === "card"
+                  ? "bg-blue-500 text-white shadow-sm"
+                  : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+              }`}
+            >
+              <FaTh className="text-sm" /> Cards
+            </button>
+          </div>
         </div>
-      )}
+
+        {/* Bookings */}
+        {bookings.length === 0 ? (
+          <div className="text-center py-16 bg-white dark:bg-gray-800 rounded-3xl shadow-sm border border-gray-200 dark:border-gray-700">
+            <div className="flex justify-center mb-4">
+              <FaSadTear className="text-4xl text-yellow-500" />
+            </div>
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+              No Bookings Yet
+            </h3>
+            <p className="text-gray-500 dark:text-gray-400 max-w-md mx-auto mb-6">
+              You haven't booked any events yet. Explore our events and start
+              your journey!
+            </p>
+          </div>
+        ) : viewMode === "table" ? (
+          <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead className="bg-blue-600 dark:bg-gray-700/50 border-b border-gray-200 dark:border-gray-600 ">
+                  <tr>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-white uppercase tracking-wider">
+                      Event
+                    </th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-white uppercase tracking-wider">
+                      Name
+                    </th>
+                    <th className="px-6 py-4 text-right text-xs font-semibold text-white uppercase tracking-wider">
+                      Actions
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+                  {currentBookings.map((event) => (
+                    <tr
+                      key={event._id}
+                      className="hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors duration-150"
+                    >
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <img
+                          src={event.imageUrl}
+                          alt={event.eventName}
+                          className="h-16 w-24 object-cover rounded-xl shadow-sm"
+                        />
+                      </td>
+                      <td className="px-6 py-4 text-sm font-semibold text-gray-900 dark:text-white">
+                        {event.eventName}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-right">
+                        <button
+                          onClick={() =>
+                            handleCancel(event._id, event.eventName)
+                          }
+                          className="inline-flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200 shadow-sm cursor-pointer"
+                        >
+                          <FaTimes className="text-sm" /> Cancel
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        ) : (
+          // Card View
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+            {currentBookings.map((event) => (
+              <div
+                key={event._id}
+                className="group bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+              >
+                <img
+                  src={event.imageUrl}
+                  alt={event.eventName}
+                  className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                <div className="p-5">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3 line-clamp-2">
+                    {event.eventName}
+                  </h3>
+                  <div className="flex justify-between items-center">
+                    <span className="inline-flex items-center gap-1.5 text-sm text-green-600 dark:text-green-400 font-medium bg-green-50 dark:bg-green-900/20 px-3 py-1 rounded-full">
+                      Booked
+                    </span>
+                    <button
+                      onClick={() => handleCancel(event._id, event.eventName)}
+                      className="inline-flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded-xl transition-all duration-200 transform hover:scale-105 shadow-sm"
+                    >
+                      <FaTimes className="text-sm" /> Cancel
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Fixed Pagination */}
+        {totalPages > 1 && (
+          <div className=" pt-10 left-0 right-0 flex justify-center items-center space-x-2 z-50">
+            <button
+              onClick={prevPage}
+              disabled={currentPage === 1}
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-all duration-200 ${
+                currentPage === 1
+                  ? "bg-gray-200 text-gray-400 cursor-not-allowed dark:bg-gray-700 dark:text-gray-400"
+                  : "bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 hover:bg-blue-50 hover:text-blue-600 border border-gray-300 dark:border-gray-600 hover:border-blue-300"
+              }`}
+            >
+              <FaArrowLeft /> Previous
+            </button>
+
+            {getPageNumbers().map((number) => (
+              <button
+                key={number}
+                onClick={() => paginate(number)}
+                className={`w-10 h-10 rounded-lg font-semibold transition-all duration-200 ${
+                  currentPage === number
+                    ? "bg-blue-600 text-white shadow-lg"
+                    : "bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 hover:bg-blue-50 hover:text-blue-600 border border-gray-300 dark:border-gray-600 hover:border-blue-300 cursor-pointer"
+                }`}
+              >
+                {number}
+              </button>
+            ))}
+
+            <button
+              onClick={nextPage}
+              disabled={currentPage === totalPages}
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-all duration-200 ${
+                currentPage === totalPages
+                  ? "bg-gray-200 text-gray-400 cursor-not-allowed dark:bg-gray-700 dark:text-gray-400"
+                  : "bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 hover:bg-blue-50 hover:text-blue-600 border border-gray-300 dark:border-gray-600 hover:border-blue-300"
+              }`}
+            >
+              Next <FaArrowRight />
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
 
 export default MyBooking;
+
+
+
+
+
+

@@ -100,7 +100,7 @@ const Navbar = () => {
         className="flex items-center text-white hover:bg-blue-600 transition-colors duration-200 py-3 px-4 rounded-lg"
         onClick={() => setIsMobileMenuOpen(false)}
       >
-        <FiCalendar className="mr-2" /> Book Events
+        <FiCalendar className="mr-2" /> Create Events
       </Link>
       <Link
         to="/mybooking"
@@ -230,7 +230,7 @@ const Navbar = () => {
                     to="/createevents"
                     className="flex items-center text-white hover:bg-blue-600 transition-colors duration-200 py-2 px-3 rounded"
                   >
-                    <FiCalendar className="mr-2" /> Book Events
+                    <FiCalendar className="mr-2" /> Create Events
                   </Link>
                   <Link
                     to="/mybooking"
