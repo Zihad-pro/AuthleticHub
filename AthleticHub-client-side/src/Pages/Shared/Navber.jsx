@@ -116,12 +116,7 @@ const Navbar = () => {
       >
         <FiSettings className="mr-2" /> Manage Events
       </Link>
-      <button
-        onClick={handleLogOut}
-        className="w-full text-left text-red-400 hover:bg-red-600 hover:text-white transition-colors duration-200 py-3 px-4 rounded-lg flex items-center"
-      >
-        <FiLogOut className="mr-2" /> Logout
-      </button>
+
       <div className="flex items-center gap-3 p-3 bg-gray-800 rounded-lg">
         {user?.photoURL ? (
           <img
