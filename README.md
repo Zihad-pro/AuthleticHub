@@ -14,7 +14,9 @@ Live Link : https://athletichub-f25f3.web.app/
 - 📅 Event listing and detailed event pages  
 - 📝 Booking/registration system with server-side records  
 - ⚙️ RESTful API using Express + Node and MongoDB  
-- 🌗 ADD Dark Mode  
+- 🌗 ADD Dark Mode
+- 📍 Auto Location Detection
+- 📧 Email Booking Confirmation
 ---
 Client side host firebase deploy . server side hosted vercel
 
